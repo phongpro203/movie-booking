@@ -1,0 +1,48 @@
+@import "tailwindcss";
+:root {
+  --primary-color: rgb(101, 105, 215); /* Màu xanh dương */
+  --text-color: #333;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  animation: l1 1s linear infinite alternate;
+}
+.loader:before {
+  content: "Loading...";
+}
+@keyframes l1 {
+  to {
+    opacity: 0;
+  }
+}
+
+#app {
+  scroll-behavior: smooth;
+}
+
+.antonio {
+  font-family: "Oswald", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  user-select: none;
+}
+
+.container-admin {
+  background-color: white;
+  padding: 24px;
+  color: #333;
+  border-radius: 5px;
+}
+.highlight {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.8)); /* Màu vàng */
+}
