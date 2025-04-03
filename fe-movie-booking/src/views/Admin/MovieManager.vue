@@ -182,7 +182,6 @@ const fetchMovies = async (page = 1) => {
     });
 
     movies.value = data.value.items.$values || [];
-    console.log(data.value);
 
     currentPage.value = data.value.pageIndex || page;
     totalItems.value = data.value.totalCount || 0;

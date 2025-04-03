@@ -230,7 +230,6 @@ const fetchShowTimes = async (page = 1) => {
     showTimes.value = data.value.items.$values || [];
     currentPage.value = data.value.pageIndex || page;
     totalItems.value = data.value.totalCount || 0; // Giả định API trả về totalItems
-    console.log(data.value);
   } catch (error) {
     console.log(error);
 
@@ -242,7 +241,6 @@ const fetchMovies = async () => {
   try {
     await fetchData("get", "/Movie/all-movie");
     movies.value = data.value.$values || [];
-    console.log(movies.value);
   } catch (error) {
     console.log(error);
     ElMessage.error("Lỗi khi tải dữ liệu");
@@ -253,7 +251,6 @@ const fetchCinemas = async () => {
   try {
     await fetchData("get", "/Cinema");
     cinemas.value = data.value.$values || [];
-    console.log(cinemas.value);
   } catch (error) {
     console.log(error);
     ElMessage.error("Lỗi khi tải dữ liệu");
@@ -264,7 +261,6 @@ const fetchRooms = async () => {
   try {
     await fetchData("get", "/Room");
     rooms.value = data.value.$values || [];
-    console.log(rooms.value);
   } catch (error) {
     console.log(error);
     ElMessage.error("Lỗi khi tải dữ liệu");
@@ -319,8 +315,6 @@ const submitForm = () => {
       try {
         const method = form.value.id ? "put" : "post";
         const url = form.value.id ? `/ShowTime/${form.value.id}` : "/ShowTime";
-
-        console.log("form", form.value);
 
         // Tạo payload, loại bỏ id khi thêm mới
         const payload = {

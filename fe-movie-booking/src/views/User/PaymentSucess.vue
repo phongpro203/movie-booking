@@ -142,7 +142,6 @@ const fetchBookingDetail = async () => {
   if (data.value) {
     booking.value = data.value;
   }
-  console.log(booking.value);
 };
 
 // Format ngày tháng

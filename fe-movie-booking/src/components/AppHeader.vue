@@ -199,7 +199,7 @@
         >
         <router-link
           v-if="!isLogin"
-          to=""
+          to="/login"
           class="block px-6 py-2 border-b text-gray-700 hover:bg-gray-100"
           >Đăng nhập</router-link
         >

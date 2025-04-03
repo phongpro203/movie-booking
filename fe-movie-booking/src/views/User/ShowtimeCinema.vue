@@ -1,5 +1,5 @@
 <template>
-  <div @click="console.log(filteredMovies)" class="container min-h-dvh">
+  <div class="container min-h-dvh">
     <el-dialog v-model="isShow" width="70%" title="Bạn đang đặt vé xem phim">
       <h1
         class="text-3xl border-y-1 text-[var(--text-color)] border-gray-300 pt-4 pb-2 antonio text-center"
@@ -30,7 +30,7 @@
       </div>
     </el-dialog>
     <div
-      class="mt-2 flex w-full border-b-1 border-gray-400 p-y-2 flex-1 text-2xl font-semibold mb-6 text-[var(--text-color)]"
+      class="px-2 mt-2 flex w-full border-b-1 border-gray-400 p-y-2 flex-1 text-2xl font-semibold mb-6 text-[var(--text-color)]"
     >
       <div
         v-for="(date, index) in dates"
@@ -85,7 +85,7 @@
             >
               <button
                 @click="handleSelectedShowtime(showTime, movie.title)"
-                class="w-full px-4 text-[var(text-color)] cursor-pointer bg-gray-300 py-2 rounded hover:bg-gray-400 transition"
+                class="w-full px-3 text-[var(text-color)] text-[12px] md:text-sm cursor-pointer bg-gray-300 py-2 rounded hover:bg-gray-400 transition"
               >
                 {{ formatTime(showTime.startTime) }} -
                 {{ formatTime(showTime.endTime) }}
@@ -128,7 +128,6 @@ const fetchMovie = async () => {
     cinemaId: cinemaStore.selectedCinema,
   });
   movies.value = data.value.$values;
-  console.log(movies.value);
 };
 
 const handleSelectedShowtime = (showtime, movieName) => {

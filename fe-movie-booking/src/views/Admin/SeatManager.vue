@@ -188,7 +188,6 @@ const fetchSeats = async (roomId) => {
     await fetchData("get", "/Seat", null, {
       roomId: roomId,
     });
-    console.log("Dữ liệu ghế từ API:", data.value.$values);
     seats.value = data.value.$values.map((seat) => {
       // Tìm room tương ứng với seat.roomId
       const matchedRoom = rooms.value.find((room) => room.id === seat.roomId);
@@ -208,7 +207,6 @@ const fetchSeats = async (roomId) => {
 const fetchRooms = async () => {
   try {
     await fetchData("get", "/Room");
-    console.log("Dữ liệu phòng từ API:", data.value.$values);
     rooms.value = (data.value.$values || []).map((room) => ({
       id: room.id || room.Id,
       name: room.name || room.Name,
@@ -268,7 +266,6 @@ const handleAdd = () => {
 };
 
 const handleEdit = (row) => {
-  console.log("Dữ liệu row:", row);
   form.value = {
     id: row.id,
     roomId: row.roomId,
@@ -327,10 +324,8 @@ const submitForm = () => {
             seatNumber: seatNumber,
             seatTypeId: form.value.seatTypeId,
           }));
-          console.log("Dữ liệu payload:", payload);
           await fetchData("post", "/Seat", payload);
           roomSelected.value = payload[0].roomId;
-          console.log("Phòng được chọn:", roomSelected.value);
 
           fetchSeats(roomSelected.value);
           ElMessage.success(`Thêm ${seatNumbers.length} ghế thành công`);

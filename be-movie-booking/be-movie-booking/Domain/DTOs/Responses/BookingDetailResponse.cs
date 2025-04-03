@@ -16,7 +16,7 @@ namespace be_movie_booking.Domain.DTOs.Responses
 
         public string? Voucher { get; set; }
 
-        public TimeOnly Showtime { get; set; }
+        public string Showtime { get; set; }
         public string movieName { get; set; }
 
         public List<string> seats { get; set; } = new List<string>();

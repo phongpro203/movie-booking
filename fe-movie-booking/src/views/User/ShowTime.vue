@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mt-2 flex w-full border-b-1 border-gray-400 p-y-2 flex-1 text-2xl font-semibold mb-6 text-[var(--text-color)]"
+    class="px-2 mt-2 flex w-full border-b-1 border-gray-400 p-y-2 flex-1 text-2xl font-semibold mb-6 text-[var(--text-color)]"
   >
     <div
       v-for="(date, index) in dates"

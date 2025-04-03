@@ -95,7 +95,6 @@ const fetchCinemas = async () => {
   try {
     await fetchData("get", "/cinema");
     cinemas.value = data.value.$values || [];
-    console.log(data.value);
   } catch (error) {
     console.log(error);
 
@@ -150,7 +149,6 @@ const submitForm = () => {
       try {
         const method = form.value.id ? "put" : "post";
         const url = form.value.id ? `/cinema/${form.value.id}` : "/cinema";
-        console.log(form.value);
         form.value.id = 0;
         await fetchData(method, url, form.value);
         await fetchCinemas();

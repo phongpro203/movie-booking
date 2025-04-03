@@ -130,7 +130,6 @@ const fetchUserInfo = async () => {
   if (data.value) {
     userInfo.value = data.value;
   }
-  console.log(userInfo.value);
 };
 
 const fetchReward = async () => {
@@ -139,7 +138,6 @@ const fetchReward = async () => {
   });
   if (data.value) {
     rewards.value = data.value.$values;
-    console.log(rewards.value);
     totalPoint.value = rewards.value.reduce(
       (total, reward) => total + reward.pointCount,
       0
@@ -153,7 +151,9 @@ const fetchBooking = async () => {
   });
   if (data.value) {
     bookings.value = data.value.$values;
-    console.log(bookings.value);
+    bookings.value.sort((a, b) => {
+      return new Date(b.bookingDate) - new Date(a.bookingDate);
+    });
   }
 };
 

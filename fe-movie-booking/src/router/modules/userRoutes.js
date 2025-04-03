@@ -10,11 +10,6 @@ export default [
         component: () => import("../../views/User/HomeView.vue"),
       },
       {
-        path: "/test",
-        name: "Test",
-        component: () => import("../../views/User/TestView.vue"),
-      },
-      {
         path: "/MovieDetail/:id",
         name: "MovieDetail",
         component: () => import("../../views/User/MovieDetail.vue"),

@@ -129,8 +129,6 @@ const fetchRooms = async () => {
   try {
     await fetchData("get", "/room", null, {});
 
-    console.log("Dữ liệu phòng từ API:", data.value.$values); // Log dữ liệu từ API
-
     rooms.value = data.value.$values;
   } catch (error) {
     console.log(error);
@@ -141,7 +139,6 @@ const fetchRooms = async () => {
 const fetchCinemas = async () => {
   try {
     await fetchData("get", "/cinema");
-    console.log("Dữ liệu rạp từ API:", data.value.$values); // Log dữ liệu từ API
     cinemas.value = data.value.$values || [];
     rooms.value.forEach((room) => {
       const cinema = cinemas.value.find((c) => c.id === room.cinemaId);
@@ -149,7 +146,6 @@ const fetchCinemas = async () => {
         room.cinema = cinema;
       }
     });
-    console.log(rooms.value);
   } catch (error) {
     console.log(error);
     ElMessage.error("Lỗi khi tải dữ liệu rạp");
@@ -174,9 +170,7 @@ const handleAdd = () => {
 };
 
 const handleEdit = (row) => {
-  console.log("Dữ liệu row:", row); // Log dữ liệu của row
   form.value = { ...row };
-  console.log("form.id sau khi gán:", form.value.id); // Log form.id
   dialogVisible.value = true;
 
   nextTick(() => {

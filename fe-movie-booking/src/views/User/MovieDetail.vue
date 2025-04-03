@@ -209,7 +209,6 @@ const addComment = async () => {
     comment: newComment.value,
     userId: Number(getUserId()),
   };
-  console.log(payload);
 
   await fetchData("post", "/Review/rating", payload);
   ElMessage.success("Đã bình luận");
@@ -234,7 +233,6 @@ const rating = async () => {
     movieId: movie.value.id,
     userId: Number(getUserId()),
   };
-  console.log(payload);
 
   await fetchData("post", "/Review/rating", payload);
   ElMessage.success("Đánh giá thành công");
@@ -249,18 +247,13 @@ const fetchMovie = async () => {
   });
   movie.value = data.value;
   showTimes.value = movie.value.showTimes.$values;
-  console.log(showTimes.value);
-
   reviews.value = movie.value.reviews.$values;
   comments.value = reviews.value.filter((review) => review.comment !== null);
-  console.log(reviews.value);
-
   rate.value =
     reviews.value.find(
       (review) => review.userId == getUserId() && review.rate != null
     )?.rate ?? 0;
   tempRate.value = rate.value;
-  console.log(rate.value);
 };
 
 const handleSelectTime = (ShowTime) => {

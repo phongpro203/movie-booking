@@ -105,7 +105,7 @@
     <!--End Điểm thưởng-->
     <hr class="text-gray-400 my-5" />
     <!--Tổng tiền-->
-    <div class="flex flex-col items-end">
+    <div class="flex flex-col items-end mb-4">
       <h1>
         Tổng tiền: {{ formatCurrency(bookingStore.totalPriceOriginal) }} VND
       </h1>

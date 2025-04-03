@@ -254,7 +254,6 @@ const handleLogin = async () => {
       password: loginForm.value.password,
     };
     await login(request);
-    console.log(getRolde());
 
     if (getRolde() == "admin") {
       router.push("/admin");
@@ -291,7 +290,6 @@ const register = async () => {
         street: registerForm.value.street,
       },
     };
-    console.log("user", user);
 
     await fetchData("post", "/Auth/register", user);
 

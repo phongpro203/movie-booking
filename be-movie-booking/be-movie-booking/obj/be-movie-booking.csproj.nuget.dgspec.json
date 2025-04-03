@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WebXemPhim\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj": {}
+    "D:\\movie-booking\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj": {}
   },
   "projects": {
-    "D:\\WebXemPhim\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj": {
+    "D:\\movie-booking\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebXemPhim\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj",
+        "projectUniqueName": "D:\\movie-booking\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj",
         "projectName": "be-movie-booking",
-        "projectPath": "D:\\WebXemPhim\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj",
+        "projectPath": "D:\\movie-booking\\be-movie-booking\\be-movie-booking\\be-movie-booking.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\WebXemPhim\\be-movie-booking\\be-movie-booking\\obj\\",
+        "outputPath": "D:\\movie-booking\\be-movie-booking\\be-movie-booking\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
