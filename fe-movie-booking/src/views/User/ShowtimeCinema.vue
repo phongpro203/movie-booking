@@ -57,13 +57,17 @@
         class="grid grid-cols-[5fr_7fr] gap-5 space-y-9 border-b border-gray-300 mt-9"
       >
         <img
+          @click="MovieDetail(movie.id)"
           :src="movie.poster"
           alt="Quỷ Nhập Tràng"
-          class="object-cover rounded-lg"
+          class="object-cover rounded-lg cursor-pointer"
         />
         <!--Movie des-->
         <div class="text-[var(--text-color)]">
-          <h1 class="antonio text-2xl text-[var(--primary-color)]">
+          <h1
+            @click="MovieDetail(movie.id)"
+            class="antonio text-2xl text-[var(--primary-color)] cursor-pointer"
+          >
             {{ movie.title }}
           </h1>
           <div class="flex gap-2 mb-5">
@@ -171,6 +175,10 @@ const filteredMovies = computed(() => {
     })
     .filter(Boolean); // Loại bỏ những phần tử null
 });
+
+const MovieDetail = (index) => {
+  router.push(`/MovieDetail/${index}`);
+};
 
 const handleBooking = (showtime) => {
   router.push({ path: "/Booking", query: { showTimeId: showtime.id } });
