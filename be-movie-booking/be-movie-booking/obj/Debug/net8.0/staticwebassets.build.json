@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "SJoLOOAFGbE9SINUHyw0fcIL/6ckJQN6hJAeF9u84YM=",
+  "Hash": "RA6Pcx1gAb7yqURitXBtw1LVZxWygXP9BbamtxdVbJg=",
   "Source": "be-movie-booking",
   "BasePath": "_content/be-movie-booking",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

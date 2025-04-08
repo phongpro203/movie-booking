@@ -92,9 +92,8 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { BarChart } from "vue-chart-3";
-import { Chart, registerables } from "chart.js";
-import { ElRow, ElCol, ElCard, ElDatePicker, ElSkeleton } from "element-plus";
 import useApi from "../../uses/fetchApi";
+import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 

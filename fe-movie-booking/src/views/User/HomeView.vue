@@ -10,7 +10,7 @@
         indicator-position="outside"
       >
         <el-carousel-item v-for="(image, index) in images" :key="index">
-          <img :src="image" alt="Movie Image" class="carousel-img h-full" />
+          <img @click="handleClick(image.id)" :src="image.image" alt="Movie Image" class="carousel-img h-full" />
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -24,12 +24,15 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import MovieView from "./MovieView.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 // State (dữ liệu)
 const images = ref([
-  "https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f17%2fmv5botm5odblotatyjcwzi00yzkzlwizodetmtm2mtzlndfmmwu2xkeyxkfqcgc%2Dv1%2Dfmjpg%2Dux1000%2D151445%2D170225%2D93.jpg",
-  "https://files.betacorp.vn/media%2fimages%2f2025%2f03%2f12%2fcopy%2Dof%2D250220%2Ddr25%2Dmain%2Db1%2Dlocalized%2Dembbed%2D164332%2D120325%2D55.jpg",
-  "https://s9.opensubtitles.com/features/5/4/2/1408245.jpg",
+  { id: 8, image: "https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f17%2fmv5botm5odblotatyjcwzi00yzkzlwizodetmtm2mtzlndfmmwu2xkeyxkfqcgc%2Dv1%2Dfmjpg%2Dux1000%2D151445%2D170225%2D93.jpg" },
+  { id: 5, image: "https://files.betacorp.vn/media%2fimages%2f2025%2f03%2f12%2fcopy%2Dof%2D250220%2Ddr25%2Dmain%2Db1%2Dlocalized%2Dembbed%2D164332%2D120325%2D55.jpg" },
+  { id: 10, image: "https://s9.opensubtitles.com/features/5/4/2/1408245.jpg" }
 ]);
 const carouselHeight = ref("600px");
 
@@ -40,6 +43,10 @@ const updateCarouselHeight = () => {
   } else {
     carouselHeight.value = "580px"; // Desktop
   }
+};
+
+const handleClick = (id) => {
+  router.push("/MovieDetail/" + id);
 };
 
 // Gọi khi component mounted

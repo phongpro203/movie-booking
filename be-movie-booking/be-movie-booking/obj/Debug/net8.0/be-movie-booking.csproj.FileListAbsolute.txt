@@ -860,3 +860,7 @@ D:\movie-booking\be-movie-booking\be-movie-booking\obj\Debug\net8.0\refint\be-mo
 D:\movie-booking\be-movie-booking\be-movie-booking\obj\Debug\net8.0\be-movie-booking.pdb
 D:\movie-booking\be-movie-booking\be-movie-booking\obj\Debug\net8.0\be-movie-booking.genruntimeconfig.cache
 D:\movie-booking\be-movie-booking\be-movie-booking\obj\Debug\net8.0\ref\be-movie-booking.dll
+D:\movie-booking\be-movie-booking\be-movie-booking\bin\Debug\net8.0\be-movie-booking.staticwebassets.endpoints.json
+D:\movie-booking\be-movie-booking\be-movie-booking\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\movie-booking\be-movie-booking\be-movie-booking\obj\Debug\net8.0\staticwebassets\msbuild.be-movie-booking.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+D:\movie-booking\be-movie-booking\be-movie-booking\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

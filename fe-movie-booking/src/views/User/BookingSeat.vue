@@ -60,18 +60,18 @@
         <div class="flex justify-center py-2 border-r-2 border-gray-300">
           <img class="w-20 h-20" :src="seatUnselect" alt="" />
         </div>
-        <span class="text-[var(--primary-color)] pt-10 text-xl"
-          >45.000 VND</span
-        >
+        <span class="text-[var(--primary-color)] pt-10 text-xl">
+          45.000 VND
+        </span>
       </div>
       <div>
         Ghế vip
         <div class="flex justify-center py-2 border-r-2 border-gray-300">
           <img class="w-20 h-20 highlight" :src="seatUnselect" alt="" />
         </div>
-        <span class="text-[var(--primary-color)] pt-10 text-xl"
-          >60.000 VND</span
-        >
+        <span class="text-[var(--primary-color)] pt-10 text-xl">
+          60.000 VND
+        </span>
       </div>
       <div>
         Tổng tiền
@@ -82,12 +82,22 @@
         </div>
       </div>
     </div>
+    <div v-if="countdown > 0">
+      <p>Ghế của bạn đang được giữ trong {{ countdown }} giây nữa.</p>
+    </div>
+    <div v-else>
+      <p>Thời gian giữ ghế đã hết! Bạn sẽ được chuyển hướng về trang Home.</p>
+    </div>
   </div>
 </template>
+
 <script setup>
-import { computed, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { formatCurrency } from "../../uses/formatCurrency";
 import { useBookingStore } from "../../store/bookingStore";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 
 // Props và Emits
 const props = defineProps({
@@ -96,17 +106,49 @@ const props = defineProps({
     default: () => [],
   },
   selectedSeats: Array,
+  showtimeId: {
+    type: Number,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["update:selectedSeats"]);
 
-// State (Dữ liệu)
-// const countdown = ref(0);
+const router = useRouter();
+const countdown = ref(300);
 const seatUnselect = "src/assets/images/unselect.png";
 const seatSelected = "src/assets/images/selected.png";
 const seatSold = "src/assets/images/booked.png";
 const seatHold = "src/assets/images/hold.png";
 const bookingStore = useBookingStore();
+
+// SignalR Connection
+let connection = null;
+const connectSignalR = async () => {
+  connection = new HubConnectionBuilder()
+    .withUrl("https://localhost:7201/seathub") // URL của SignalR Hub
+    .build();
+
+  connection.on("SeatLocked", (showtimeId, seatId) => {
+    if (showtimeId == props.showtimeId) {
+      const seat = props.seats.find((s) => s.id == seatId);
+      console.log(showtimeId);
+
+      if (seat) seat.status = "hold"; // Cập nhật ghế đã được giữ
+    }
+  });
+
+  connection.on("SeatUnlocked", (showtimeId, seatId) => {
+    if (showtimeId == props.showtimeId) {
+      const seat = props.seats.find((s) => s.id == seatId);
+      if (seat) seat.status = "available"; // Cập nhật ghế đã mở lại
+    }
+  });
+
+  await connection.start();
+};
+
+connectSignalR();
 
 // Computed Properties
 const totalPrice = computed(() => {
@@ -121,8 +163,8 @@ const totalPrice = computed(() => {
 
 const getSeatClass = (seat) => [
   "flex items-center justify-center text-[12px]",
-  seat.status == "booked" ? "" : "cursor-pointer",
-  seat.seatType == "2D Vip" ? "highlight" : "",
+  seat.status === "booked" ? "" : "cursor-pointer",
+  seat.seatType === "2D Vip" ? "highlight" : "",
 ];
 
 const getSeatStyle = (seat) => {
@@ -150,11 +192,39 @@ const getSeatStyle = (seat) => {
   };
 };
 
-const selectSeat = (seat) => {
-  if (seat.status === "booked" || seat.status === "hold") return;
+const selectSeat = async (seat) => {
+  if (seat.status === "booked" || seat.status === "hold") {
+    ElMessage.info("Ghế này đã được giữ hoặc đã đặt, vui lòng chọn ghế khác");
+    return;
+  }
+
+  const amountSeatSelected = props.seats.filter((s) => s.status === "selected");
+  if (amountSeatSelected.length > 10) {
+    ElMessage.info(
+      "Bạn chỉ được chọn tối đa 10 ghế, vui lòng đến tại rạp để đặt nhiều hơn!"
+    );
+    return;
+  }
 
   // Cập nhật trạng thái ghế
   seat.status = seat.status === "selected" ? "available" : "selected";
+
+  const wasSelected = seat.status === "selected";
+
+  // Gửi thông báo tới các client khác về việc ghế đã bị chọn
+  if (wasSelected) {
+    await connection.invoke(
+      "SelectSeat",
+      props.showtimeId.toString(),
+      seat.id.toString()
+    );
+  } else {
+    await connection.invoke(
+      "UnselectSeat",
+      props.showtimeId.toString(),
+      seat.id.toString()
+    );
+  }
 
   // Lọc ra danh sách ghế đã chọn
   const updatedSeats = props.seats.filter((s) => s.status === "selected");
@@ -166,4 +236,30 @@ const selectSeat = (seat) => {
 watch(totalPrice, (newVal) => {
   bookingStore.setTotalPriceOriginal(newVal);
 });
+watch(countdown, (newVal) => {
+  if (newVal <= 0) {
+    router.push({ name: "Home" });
+  }
+});
+
+onMounted(() => {
+  const interval = setInterval(() => {
+    if (countdown.value > 0) {
+      countdown.value -= 1; // Giảm số giây mỗi giây
+    } else {
+      clearInterval(interval); // Dừng bộ đếm khi hết thời gian
+      // Chuyển hướng về trang Home khi hết thời gian
+      ElMessage.info(
+        "Đã hết thời gian chọn ghế, bạn đã được đưa về trang chủ!"
+      );
+      router.push({ name: "Home" });
+    }
+  }, 1000); // Giảm mỗi giây
+});
 </script>
+
+<style scoped>
+.selected {
+  background-color: red;
+}
+</style>

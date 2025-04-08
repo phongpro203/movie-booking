@@ -19,6 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddJsonOptions(x =>
    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
+builder.Services.AddSignalR();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,10 +36,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVueApp", policy =>
     {
-        policy.AllowAnyOrigin()
-           // .WithOrigins("http://localhost:5173", "http://192.168.1.5:5173")
+        policy.WithOrigins("http://localhost:5173", "http://192.168.1.5:5173")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -146,6 +148,8 @@ builder.Services.AddScoped<JWTService>();
 
 var app = builder.Build();
 
+app.MapHub<SeatHub>("/seathub");
+
 app.UseCors("AllowVueApp");
 
 // Configure the HTTP request pipeline.
@@ -154,6 +158,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 

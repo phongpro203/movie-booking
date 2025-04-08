@@ -21,6 +21,7 @@
         <!-- Loại ghế -->
         <booking-seat
           v-if="showTime?.seats"
+          :showtimeId="showTime.id"
           :seats="showTime.seats.$values"
           v-model:selectedSeats="selectedSeats"
           v-show="!isPayment"
